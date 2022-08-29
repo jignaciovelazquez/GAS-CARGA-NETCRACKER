@@ -79,13 +79,13 @@
                                 <div class="col-4">
                                     <select id="TipoCaja" class="form-select" required>
                                         <option value=0 selected disabled value="">Seleccione una opcion</option>
-                                        <option value=1>KOC</option>
-                                        <option value=2>SUB</option>
-                                        <option value=3>HUB</option>
+                                        <option value=1>SUB</option>
+                                        <option value=2>HUB</option>
+                                        <option value=3>KOC</option>
                                     </select>
                                 </div>
                                 <div class="col-4">
-                                    <input id="NCaja" class="form-control" list="datalistOptions" id="exampleDataList"
+                                    <input id="NCaja" class="form-control" list="datalistOptions"
                                         placeholder="Seleccione">
                                     <datalist id="datalistOptions">
                                         <option value="CEC-1">
@@ -125,61 +125,77 @@
                     <div class="row">
                         <div class="col-12 position-relative">
                             <div class="input-group">
-                                <div class="col-4">
-                                    <label class="col col-form-label fw-bold text-start">Tipo de Cajaooo</label>
+                                <div class="col-3">
+                                    <label for="CajaCEP" class="col col-form-label fw-bold text-start">Caja CEP (KOC 48
+                                        OUT /
+                                        ZTE)</label>
                                 </div>
-                                <div class="col-4">
-                                    <label class="col col-form-label fw-bold text-start">N# Cajaooo</label>
+                                <div class="col-3">
+                                    <label for="CajaYOFC" class="col col-form-label fw-bold text-start">Caja CEC
+                                        (YOFC)</label>
                                 </div>
-                                <div class="col-4">
-                                    <label class="col col-form-label fw-bold text-start">Codigo Cajaoooo</label>
+                                <div class="col-2">
+                                    <label for="CajaSUB" class="col col-form-label fw-bold text-start">Caja CEC
+                                        (SUB)</label>
                                 </div>
                             </div>
                         </div>
                         <div class="col-12 position-relative">
                             <div class="input-group">
-                                <div class="col-4">
-                                    <select id="TIPO" class="form-select" required>
-                                        <option value=0 selected disabled value="">Seleccione una opcion</option>
-                                        <option value=1>KOC</option>
-                                        <option value=2>SUB</option>
-                                        <option value=3>HUB</option>
+                                <div class="col-3">
+                                    <select id="CajaCEP" class="form-select">
+                                        <option value=0 selected disabled value="">Seleccione # Cajas</option>
+                                        <option value=1>1</option>
+                                        <option value=2>2</option>
+                                        <option value=3>3</option>
+                                        <option value=4>4</option>
+                                        <option value=5>5</option>
                                     </select>
                                 </div>
-                                <div class="col-4">
-                                    <input class="form-control" list="datalistOptions" id="exampleDataList"
-                                        placeholder="Seleccione">
-                                    <datalist id="datalistOptions">
-                                        <option value="CEC-1">
-                                        <option value="CEC-2">
-                                        <option value="CEC-3">
-                                        <option value="CEC-4">
-                                        <option value="CEC-5">
-                                        <option value="CES-1">
-                                        <option value="CES-2">
-                                        <option value="CES-3">
-                                        <option value="CES-4">
-                                    </datalist>
+                                <div class="col-3">
+                                    <input type="number" class="form-control" id="CajaYOFC"
+                                        placeholder="Ingrese # Cajas">
                                 </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control" id="CCAJA">
+                                <div class="col-2">
+                                    <input type="number" class="form-control" id="CajaSUB"
+                                        placeholder="Ingrese # Cajas">
                                 </div>
+
+                                <button class="btn btn-secondary col-2" type="button" id="GENERAR">Generar</button>
+                                <button class="btn btn-danger col-2" type="button" id="BORRAR">Borrar</button>
                             </div>
                         </div>
                     </div>
+
+
+
                     <div class="row">
-                        <div class="col-12 position-relative">
-                            <label for="inputPassword" class="col-sm-12 col-form-label fw-bold text-start">Cuerpo del
+
+                        <div id="CajaPisos" class="col-12 position-relative">
+
+
+
+                        </div>
+
+
+
+                        <div id="SalidaMontante" class="col-12 position-relative">
+
+                            <label for="JSONmontante" class="col-sm-12 col-form-label fw-bold text-start">Cuerpo del
                                 JSON:</label>
                             <div class="col-sm-10 offset-sm-1">
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="15"></textarea>
+                                <textarea class="form-control" id="JSONmontante" rows="15"></textarea>
                             </div>
                             <div class="col-sm-10 offset-sm-1 d-grid gap-2">
-                                <button type="button" class="btn btn-success">COPIAR</button>
+                                <button id="COPIAR2" type="button" class="btn btn-success">COPIAR</button>
                             </div>
                         </div>
+
                     </div>
+
+
                 </div>
+
 
 
 
