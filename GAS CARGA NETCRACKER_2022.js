@@ -85,14 +85,89 @@ document.getElementById("COPIAR2").addEventListener('click', () => {
 
 })
 
+
+
+
+
 document.getElementById("GENERAR").addEventListener('click', () => {
 
     //let caja = document.getElementById("NCaja").value;
 
-    FORMATO = `{\n 'version':4,\n 'servicios':[\n {\n "mapeoMontante": [\n {`;
+    let PuertosUsados = 0;
+    let Puerto = 1;
+
+    for (let i = 1; i <= TotalCajas; i++) {
+        let Puertosxpiso = document.getElementById("PUERTOS" + i).value;
+        PuertosUsados = PuertosUsados + parseInt(Puertosxpiso, 10);
+
+    }
+
+    if (PuertosUsados == 0) {
+        FORMATO = `{\n 'version':2,\n 'servicios':[\n {\n "mapeoMontante": [\n`;
+    } else {
+        FORMATO = `{\n 'version':4,\n 'servicios':[\n {\n "mapeoMontante": [\n`;
+    }
 
 
-    document.getElementById("JSONexterior").value = FORMATO;
+    for (let i = 1; i <= TotalCajas; i++) {
+
+        FORMATO = FORMATO + `{"pisos":"${document.getElementById("PISOS" + i).value}","caja":"${document.getElementById("YOFC" + i).value}","puertos":8},\n`;
+    }
+    FORMATO = FORMATO + `]\n },\n`;
+
+    for (let i = 1; i <= TotalCajas; i++) {
+
+    }
+
+
+
+    for (let i = 1; i <= TotalCajas; i++) {
+
+        let Puertosxpiso = document.getElementById("PUERTOS" + i).value;
+        if (parseInt(Puertosxpiso, 10) > 0) {
+
+
+            FORMATO = FORMATO + `{\n'pisos':'${document.getElementById("PISOS" + i).value}',\n'departamentos':'${document.getElementById("DPTOS" + i).value}',\n'descripcionCaja':'CEP-${document.getElementById("CajaCEP").value}',\n'destinoPuertos': [\n{\n`;
+
+
+
+            for (let ind = 1; ind <= parseInt(Puertosxpiso, 10); ind++) {
+
+                FORMATO = FORMATO + `"${Puerto}":"${Puerto}",\n`;
+                Puerto++;
+
+            }
+
+
+            FORMATO = FORMATO + `}\n]\n},\n`;
+        }
+
+        //let Num = document.getElementById("PUERTOS" + i).value;
+
+
+
+    }
+
+    if (PuertosUsados < 8) {
+
+        FORMATO = FORMATO + `{\n'pisos':'todos',\n'departamentos':'todos',\n'descripcionCaja':'CEP-${document.getElementById("CajaCEP").value}',\n'destinoPuertos': [\n{\n`;
+
+        for (let inde = PuertosUsados + 1; inde <= 8; inde++) {
+
+            FORMATO = FORMATO + `"${inde}": "${inde}",\n`;
+
+        }
+
+        FORMATO = FORMATO + `}\n]\n}\n]\n}`;
+
+
+
+    }
+
+
+
+
+    document.getElementById("JSONmontante").value = FORMATO;
 
 
 
@@ -181,6 +256,7 @@ document.getElementById("CajaYOFC").addEventListener('change', () => {
                                 <div class="col-3">
                                     <select id="PUERTOS" class="form-select" required>
                                         <option value=0 selected disabled value="">Seleccione una opcion</option>
+                                        <option value=0>0</option>
                                         <option value=1>1</option>
                                         <option value=2>2</option>
                                         <option value=3>3</option>
@@ -195,6 +271,10 @@ document.getElementById("CajaYOFC").addEventListener('change', () => {
         document.getElementById("PISOS").setAttribute("id", "PISOS" + index);
         document.getElementById("DPTOS").setAttribute("id", "DPTOS" + index);
         document.getElementById("PUERTOS").setAttribute("id", "PUERTOS" + index);
+
+        if (index == 1) {
+            document.getElementById("DPTOS1").setAttribute("onchange", "prueba();");
+        }
 
         document.getElementById("YOFC" + index).value = "CEC-" + index;
 
@@ -229,6 +309,15 @@ const ModoMontante = () => {
     document.getElementById("CajaExterior").classList.add("d-none");
     document.getElementById("CajaMontante").classList.remove("d-none");
     document.getElementById("CajaMontante").classList.add("d-block");
+}
+
+const prueba = () => {
+
+    for (let index = 2; index <= TotalCajas; index++) {
+
+        document.getElementById("DPTOS" + index).value = document.getElementById("DPTOS1").value;
+
+    }
 }
 
 
