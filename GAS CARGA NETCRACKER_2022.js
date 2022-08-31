@@ -56,7 +56,7 @@ document.getElementById("CajaExterior").addEventListener('change', () => {
 
         let caja = document.getElementById("NCaja").value;
 
-        FORMATO = `{\n 'version':1,\n 'servicios':[\n {\n 'pisos':'Todos',\n 'departamentos':'todos',\n 'descripcionCaja':'${caja}',\n 'destinoPuertos':[\n {\n '1':'1',\n '2':'2',\n '3':'3',\n '4':'4',\n '5':'5',\n '6':'6',\n '7':'7',\n '8':'8'\n }\n ]\n }\n ]\n }\n`;
+        FORMATO = `{\n "version":1,\n "servicios":[\n {\n "pisos":"Todos",\n "departamentos":"todos",\n "descripcionCaja":"${caja}",\n "destinoPuertos":[\n {\n "1":"1",\n "2":"2",\n "3":"3",\n "4":"4",\n "5":"5",\n "6":"6",\n "7":"7",\n "8":"8"\n }\n ]\n }\n ]\n }\n`;
 
 
         document.getElementById("JSONexterior").value = FORMATO;
@@ -85,16 +85,20 @@ document.getElementById("COPIAR2").addEventListener('click', () => {
 
 })
 
+document.getElementById("BORRAR").addEventListener('click', () => {
+    window.location.reload()
+})
 
 
 
+let Puerto = 1;
 
 document.getElementById("GENERAR").addEventListener('click', () => {
 
     //let caja = document.getElementById("NCaja").value;
 
     let PuertosUsados = 0;
-    let Puerto = 1;
+
 
     for (let i = 1; i <= TotalCajas; i++) {
         let Puertosxpiso = document.getElementById("PUERTOS" + i).value;
@@ -103,17 +107,21 @@ document.getElementById("GENERAR").addEventListener('click', () => {
     }
 
     if (PuertosUsados == 0) {
-        FORMATO = `{\n 'version':2,\n 'servicios':[\n {\n "mapeoMontante": [\n`;
+        FORMATO = `{\n "version":2,\n "servicios":[\n {\n "mapeoMontante": [\n`;
     } else {
-        FORMATO = `{\n 'version':4,\n 'servicios':[\n {\n "mapeoMontante": [\n`;
+        FORMATO = `{\n "version":4,\n "servicios":[\n {\n "mapeoMontante": [\n`;
     }
 
 
     for (let i = 1; i <= TotalCajas; i++) {
 
         FORMATO = FORMATO + `{"pisos":"${document.getElementById("PISOS" + i).value}","caja":"${document.getElementById("YOFC" + i).value}","puertos":8},\n`;
+        if (i == TotalCajas) {
+            let result = FORMATO.slice(0, -2);
+            FORMATO = result;
+        }
     }
-    FORMATO = FORMATO + `]\n },\n`;
+    FORMATO = FORMATO + `\n]\n },\n`;
 
     for (let i = 1; i <= TotalCajas; i++) {
 
@@ -127,7 +135,7 @@ document.getElementById("GENERAR").addEventListener('click', () => {
         if (parseInt(Puertosxpiso, 10) > 0) {
 
 
-            FORMATO = FORMATO + `{\n'pisos':'${document.getElementById("PISOS" + i).value}',\n'departamentos':'${document.getElementById("DPTOS" + i).value}',\n'descripcionCaja':'CEP-${document.getElementById("CajaCEP").value}',\n'destinoPuertos': [\n{\n`;
+            FORMATO = FORMATO + `{\n"pisos":"${document.getElementById("PISOS" + i).value}",\n"departamentos":"${document.getElementById("DPTOS" + i).value}",\n"descripcionCaja":"CEP-${document.getElementById("CajaCEP").value}",\n"destinoPuertos": [\n{\n`;
 
 
 
@@ -135,42 +143,42 @@ document.getElementById("GENERAR").addEventListener('click', () => {
 
                 FORMATO = FORMATO + `"${Puerto}":"${Puerto}",\n`;
                 Puerto++;
+                if (ind == parseInt(Puertosxpiso, 10)) {
+                    let result = FORMATO.slice(0, -2);
+                    FORMATO = result;
+                }
 
             }
 
 
-            FORMATO = FORMATO + `}\n]\n},\n`;
+            FORMATO = FORMATO + `\n}\n]\n},\n`;
         }
-
-        //let Num = document.getElementById("PUERTOS" + i).value;
-
 
 
     }
 
     if (PuertosUsados < 8) {
 
-        FORMATO = FORMATO + `{\n'pisos':'todos',\n'departamentos':'todos',\n'descripcionCaja':'CEP-${document.getElementById("CajaCEP").value}',\n'destinoPuertos': [\n{\n`;
+        FORMATO = FORMATO + `{\n"pisos":"todos",\n"departamentos":"todos",\n"descripcionCaja":"CEP-${document.getElementById("CajaCEP").value}",\n"destinoPuertos": [\n{\n`;
 
         for (let inde = PuertosUsados + 1; inde <= 8; inde++) {
 
-            FORMATO = FORMATO + `"${inde}": "${inde}",\n`;
+            FORMATO = FORMATO + `"${inde}": "${Puerto}",\n`;
+            Puerto++;
+            if (inde == 8) {
+                let result = FORMATO.slice(0, -2);
+                FORMATO = result;
+            }
 
         }
 
-        FORMATO = FORMATO + `}\n]\n}\n]\n}`;
+        FORMATO = FORMATO + `\n}\n]\n}\n]\n}`;
 
 
 
     }
 
-
-
-
     document.getElementById("JSONmontante").value = FORMATO;
-
-
-
 
 })
 
@@ -178,30 +186,6 @@ document.getElementById("GENERAR").addEventListener('click', () => {
 
 document.getElementById("CajaYOFC").addEventListener('change', () => {
 
-    /*
-    console.log(star);
-
-    if (star == 0) {
-
-        star = 1;
-
-    }
-    else {
-        for (let index = 1; index <= TotalCajas; index++) {
-            console.log("BORRADO");
-
-            document.getElementById("YOFC" + index).remove();;
-            document.getElementById("PISOS" + index).remove();;
-            document.getElementById("DPTOS" + index).remove();;
-            document.getElementById("PUERTOS" + index).remove();;
-        }
-
-    }
-
-    console.log(star);
-    //eliminar el div padre
-
-    */
 
     const Cajaxpiso = document.createElement('DIV');
     const ElementoPadre = document.getElementById("CajaPisos");
