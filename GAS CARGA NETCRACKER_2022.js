@@ -34,7 +34,6 @@ document.getElementById("CajaExterior").addEventListener('change', () => {
     if ((document.getElementById("TipoCaja").value != "") && (document.getElementById("NCaja").value != "")) {
 
         let TCAJA = document.getElementById("TipoCaja").value;
-        console.log(TCAJA);
 
 
         switch (TCAJA) {
@@ -91,6 +90,7 @@ document.getElementById("BORRAR").addEventListener('click', () => {
 
 
 
+let Splitter = 1;
 let Puerto = 1;
 
 document.getElementById("GENERAR").addEventListener('click', () => {
@@ -105,6 +105,7 @@ document.getElementById("GENERAR").addEventListener('click', () => {
         PuertosUsados = PuertosUsados + parseInt(Puertosxpiso, 10);
 
     }
+//---------------------------------------------------------- CABECERA ---------------------------------------------------------------------------------
 
     if (PuertosUsados == 0) {
         FORMATO = `{\n "version":2,\n "servicios":[\n {\n "mapeoMontante": [\n`;
@@ -121,27 +122,28 @@ document.getElementById("GENERAR").addEventListener('click', () => {
             FORMATO = result;
         }
     }
+
     FORMATO = FORMATO + `\n]\n },\n`;
 
-    for (let i = 1; i <= TotalCajas; i++) {
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    }
-
-
+//---------------------------------------------------------- CUERPO ---------------------------------------------------------------------------------
 
     for (let i = 1; i <= TotalCajas; i++) {
 
         let Puertosxpiso = document.getElementById("PUERTOS" + i).value;
+
+
         if (parseInt(Puertosxpiso, 10) > 0) {
 
 
             FORMATO = FORMATO + `{\n"pisos":"${document.getElementById("PISOS" + i).value}",\n"departamentos":"${document.getElementById("DPTOS" + i).value}",\n"descripcionCaja":"CEP-${document.getElementById("CajaCEP").value}",\n"destinoPuertos": [\n{\n`;
 
 
-
             for (let ind = 1; ind <= parseInt(Puertosxpiso, 10); ind++) {
 
-                FORMATO = FORMATO + `"${Puerto}":"${Puerto}",\n`;
+                FORMATO = FORMATO + `"${Splitter}":"${Puerto}",\n`;
+                Splitter++;
                 Puerto++;
                 if (ind == parseInt(Puertosxpiso, 10)) {
                     let result = FORMATO.slice(0, -2);
@@ -150,9 +152,24 @@ document.getElementById("GENERAR").addEventListener('click', () => {
 
             }
 
-
             FORMATO = FORMATO + `\n}\n]\n},\n`;
+
+            console.log(Splitter);
+
+            if (Splitter == 9){
+
+              FORMATO = FORMATO.slice(0, -2);
+
+              FORMATO = FORMATO + `\n]\n}`;
+
+              Splitter = 1;
+
+
+            }
+
+
         }
+
 
 
     }
@@ -171,6 +188,8 @@ document.getElementById("GENERAR").addEventListener('click', () => {
             }
 
         }
+
+        Splitter = 1;
 
         FORMATO = FORMATO + `\n}\n]\n}\n]\n}`;
 
@@ -238,14 +257,15 @@ document.getElementById("CajaYOFC").addEventListener('change', () => {
                                     </datalist>
                                 </div>
                                 <div class="col-3">
-                                    <select id="PUERTOS" class="form-select" required>
+                                    <input id="PUERTOS" class="form-control" list="puertosusa" placeholder="Seleccione">
+                                    <datalist id="puertosusa">
                                         <option value=0 selected disabled value="">Seleccione una opcion</option>
                                         <option value=0>0</option>
                                         <option value=1>1</option>
                                         <option value=2>2</option>
                                         <option value=3>3</option>
                                         <option value=4>4</option>
-                                    </select>
+                                    </datalist>
                                 </div>
                             </div>`;
 
@@ -266,13 +286,6 @@ document.getElementById("CajaYOFC").addEventListener('change', () => {
     }
 
 
-
-
-
-
-
-
-    console.log("Crea un hijo");
 
 })
 
@@ -303,5 +316,4 @@ const prueba = () => {
 
     }
 }
-
 
